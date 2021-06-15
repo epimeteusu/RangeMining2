@@ -1,5 +1,7 @@
 package epi.rangemining;
-///aaaa
+//aaaaaaaaaaaaaaaaaaaaaaaaa
+//asdasdasdadadad
+//aaa
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

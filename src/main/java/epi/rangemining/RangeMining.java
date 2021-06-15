@@ -1,7 +1,4 @@
 package epi.rangemining;
-//aaaaaaaaaaaaaaaaaaaaaaaaa
-
-//aaa
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

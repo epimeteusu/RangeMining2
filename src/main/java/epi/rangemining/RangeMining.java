@@ -1,6 +1,11 @@
 package epi.rangemining;
+<<<<<<<<< Temporary merge branch 1
 //aaaaaaaaaaaaaaaaaaaaaaaaa
-
+//asdasdasdadadad
+//aaa
+=========
+///aaaa
+>>>>>>>>> Temporary merge branch 2
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

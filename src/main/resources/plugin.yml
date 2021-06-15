@@ -1,0 +1,9 @@
+name: RangeMining
+version: ${project.version}
+main: epi.rangemining.RangeMining
+api-version: 1.17
+
+commands:
+  rm:
+    description: test command.
+    usage: '/ : 説明'

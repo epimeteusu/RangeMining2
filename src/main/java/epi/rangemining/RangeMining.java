@@ -1,7 +1,5 @@
 package epi.rangemining;
 
-
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -114,7 +112,7 @@ public final class RangeMining extends JavaPlugin implements Listener {
                         Block b2 = loc.getBlock();
                         Material brock_type = b2.getType();
                         if (check_brock(brock_type)) {
-                            giveItemList = give_item(giveItemList, e, b2);
+                            giveItemList = give_item(giveItemList, b2);
                             //e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), giveItemList.get(0));
                             b2.setType(Material.AIR);
                             //b2.breakNaturally();
@@ -130,7 +128,7 @@ public final class RangeMining extends JavaPlugin implements Listener {
         }
     }
 
-    public List<ItemStack> give_item(List<ItemStack> giveItemList, BlockBreakEvent e, Block b2) {
+    public List<ItemStack> give_item(List<ItemStack> giveItemList, Block b2) {
         List<ItemStack> new_giveItemList = (List<ItemStack>) b2.getDrops();//新規リストの仮代入
         if (giveItemList == null) {
             giveItemList = new_giveItemList;

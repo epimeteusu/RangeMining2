@@ -2,4 +2,3 @@
 
 IntelliJ IDEAとGitHubの連携
 
-aaaaaaaassssssss

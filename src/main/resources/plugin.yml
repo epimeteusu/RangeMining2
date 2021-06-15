@@ -3,6 +3,7 @@ version: ${project.version}
 main: epi.rangemining.RangeMining
 api-version: 1.17
 
+
 commands:
   rm:
     description: test command.

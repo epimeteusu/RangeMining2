@@ -1,6 +1,5 @@
 package epi.rangemining;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,12 +45,12 @@ public final class RangeMining extends JavaPlugin implements Listener {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-        return command.cmd_Supplement(sender,cmd,alias,args);
+        return command.cmd_Supplement(sender, cmd, alias, args);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        return command.cmd_check(sender,cmd,commandLabel,args,map);
+        return command.cmd_check(sender, cmd, commandLabel, args, map);
     }
 
     @EventHandler
@@ -114,9 +113,4 @@ public final class RangeMining extends JavaPlugin implements Listener {
         }
         return giveItemList;
     }
-
-    //giveItemList.set(f, new ItemStack(get_item.getType(),get_item.getAmount() + giveItemList.get(f).getAmount()));
-    //giveItemList.add(get_item);
-
-
 }

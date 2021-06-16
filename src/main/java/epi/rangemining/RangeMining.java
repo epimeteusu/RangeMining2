@@ -45,55 +45,13 @@ public final class RangeMining extends JavaPlugin implements Listener {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (!command.getName().equalsIgnoreCase("rm")) return super.onTabComplete(sender, command, alias, args);
-        if (args.length == 1) {
-            if (args[0].length() == 0) { // /testまで
-                return Arrays.asList("normal", "small", "medium", "large");
-            } else {
-                //入力されている文字列と先頭一致
-                if ("normal".startsWith(args[0])) {
-                    return Collections.singletonList("normal");
-                } else if ("small".startsWith(args[0])) {
-                    return Collections.singletonList("small");
-                } else if ("medium".startsWith(args[0])) {
-                    return Collections.singletonList("medium");
-                } else if ("large".startsWith(args[0])) {
-                    return Collections.singletonList("large");
-                }
-            }
-        }
-        //JavaPlugin#onTabComplete()を呼び出す
-        return super.onTabComplete(sender, command, alias, args);
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
+        return command.cmd_Supplement(sender,cmd,alias,args);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        // test コマンドの処理
-        if (cmd.getName().equalsIgnoreCase("rm")) {
-            sender.sendMessage(sender.getName());
-            if (args[0].equalsIgnoreCase("normal")) {
-                sender.sendMessage(ChatColor.GREEN + "通常の採掘範囲です");
-                map.put(sender.getName(), 0);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("small")) {
-                sender.sendMessage(ChatColor.GREEN + "3*3範囲を採掘します");
-                map.put(sender.getName(), 1);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("medium")) {
-                sender.sendMessage(ChatColor.GREEN + "5*5範囲を採掘します");
-                map.put(sender.getName(), 2);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("large")) {
-                sender.sendMessage(ChatColor.GREEN + "7*7範囲を採掘します");
-                map.put(sender.getName(), 3);
-                return true;
-            }
-        }
-        return false;
+        return command.cmd_check(sender,cmd,commandLabel,args,map);
     }
 
     @EventHandler
@@ -112,7 +70,7 @@ public final class RangeMining extends JavaPlugin implements Listener {
                         Location loc = new Location(startLoc.getWorld(), x, y, z);
                         Block b2 = loc.getBlock();
                         Material brock_type = b2.getType();
-                        if (check_brock(brock_type)) {
+                        if (check_item.check_brock(brock_type)) {
                             giveItemList = give_item(giveItemList, b2);
                             //e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), giveItemList.get(0));
                             b2.setType(Material.AIR);
@@ -160,54 +118,5 @@ public final class RangeMining extends JavaPlugin implements Listener {
     //giveItemList.set(f, new ItemStack(get_item.getType(),get_item.getAmount() + giveItemList.get(f).getAmount()));
     //giveItemList.add(get_item);
 
-    private boolean check_brock(Material brock_type) {
-        boolean check;
-        switch (brock_type) {
-            case STONE:
-            case GRANITE:
-            case DIORITE:
-            case ANDESITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case CRIMSON_NYLIUM:
-            case WARPED_NYLIUM:
-            case COBBLESTONE:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case GOLD_ORE:
-            case IRON_ORE:
-            case COAL_ORE:
-            case NETHER_GOLD_ORE:
-            case LAPIS_ORE:
-            case SANDSTONE:
-            case CHISELED_SANDSTONE:
-            case CUT_SANDSTONE:
-            case OBSIDIAN:
-            case DIAMOND_ORE:
-            case REDSTONE_ORE:
-            case CLAY:
-            case NETHERRACK:
-            case SOUL_SAND:
-            case SOUL_SOIL:
-            case BASALT:
-            case MYCELIUM:
-            case END_STONE:
-            case EMERALD_ORE:
-            case QUARTZ_BLOCK:
-            case MAGMA_BLOCK:
-            case NETHER_WART_BLOCK:
-            case RED_NETHER_BRICKS:
-            case COPPER_BLOCK:
-            case DEEPSLATE:
-            case TUFF:
-                check = true;
-                break;
-            default:
-                check = false;
-        }
-        return check;
-    }
+
 }

@@ -99,7 +99,8 @@ public final class RangeMining extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(BlockBreakEvent e) {
         Block b = e.getBlock();//破壊ブロックの取得
-        ItemStack p = e.getPlayer().getItemInHand();
+        ItemStack p = e.getPlayer().getInventory().getItemInMainHand();
+        //ItemStack p = e.getPlayer().getItemInHand(); 非推奨
         if (p.getType() == Material.DIAMOND_PICKAXE) {
             List<ItemStack> giveItemList = null;
             int r = map.get(e.getPlayer().getName());
@@ -133,8 +134,9 @@ public final class RangeMining extends JavaPlugin implements Listener {
         if (giveItemList == null) {
             giveItemList = new_giveItemList;
         } else {
-            for (int i = 0; i < new_giveItemList.size(); i++) {//新規リストの要素数ループ
-                ItemStack get_item = new_giveItemList.get(i);//新入手アイテムの要素を抜き出し
+            //新入手アイテムの要素を抜き出し
+            for (ItemStack get_item : new_giveItemList) {//新規リストの要素数ループ
+                //↑↑↑↑(int i = 0; i < new_giveItemList.size(); i++)と同じ
                 boolean contains = false; //重複判定
                 int index = 0; //重複No.
                 for (int f = 0; f < giveItemList.size(); f++) {

@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.*;
 
 
@@ -57,7 +56,6 @@ public final class RangeMining extends JavaPlugin implements Listener {
     public void onPlayerJoin(BlockBreakEvent e) {
         Block b = e.getBlock();//破壊ブロックの取得
         ItemStack p = e.getPlayer().getInventory().getItemInMainHand();
-        //ItemStack p = e.getPlayer().getItemInHand(); 非推奨
         if (p.getType() == Material.DIAMOND_PICKAXE) {
             List<ItemStack> giveItemList = null;
             int r = map.get(e.getPlayer().getName());
@@ -71,9 +69,7 @@ public final class RangeMining extends JavaPlugin implements Listener {
                         Material brock_type = b2.getType();
                         if (check_item.check_brock(brock_type)) {
                             giveItemList = give_item(giveItemList, b2);
-                            //e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), giveItemList.get(0));
                             b2.setType(Material.AIR);
-                            //b2.breakNaturally();
                         }
                     }
                 }

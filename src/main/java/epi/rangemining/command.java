@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class command {
-    public static List<String> cmd_Supplement(CommandSender sender, Command cmd, String alias, String[] args) {
+    public static List<String> cmd_Supplement(Command cmd, String alias, String[] args) {
         if (!cmd.getName().equalsIgnoreCase("rm"))
-            return cmd_Supplement(sender, cmd, alias, args);
+            return cmd_Supplement(cmd, alias, args);
         if (args.length == 1) {
             if (args[0].length() == 0) { // /testまで
                 return Arrays.asList("normal", "small", "medium", "large");
@@ -29,10 +29,10 @@ public class command {
                 }
             }
         }
-        return cmd_Supplement(sender, cmd, alias, args);
+        return cmd_Supplement(cmd, alias, args);
     }
 
-    public static boolean cmd_check(CommandSender sender, Command cmd, String commandLabel, String[] args, HashMap<String, Integer> map) {
+    public static boolean cmd_check(CommandSender sender, Command cmd, String[] args, HashMap<String, Integer> map) {
         if (cmd.getName().equalsIgnoreCase("rm")) {
             sender.sendMessage(sender.getName());
             if (args[0].equalsIgnoreCase("normal")) {

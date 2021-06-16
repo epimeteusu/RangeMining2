@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.*;
 
 
@@ -44,12 +45,12 @@ public final class RangeMining extends JavaPlugin implements Listener {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-        return command.cmd_Supplement(sender, cmd, alias, args);
+        return command.cmd_Supplement(cmd, alias, args);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        return command.cmd_check(sender, cmd, commandLabel, args, map);
+        return command.cmd_check(sender, cmd, args, map);
     }
 
     @EventHandler

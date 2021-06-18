@@ -1,55 +1,18 @@
 package epi.rangemining;
 
-import org.bukkit.Material;
+import java.util.List;
+import java.util.Objects;
 
 public class check_item {
-    static boolean check_brock(Material brock_type) {
-        boolean check;
-        switch (brock_type) {
-            case STONE:
-            case GRANITE:
-            case DIORITE:
-            case ANDESITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case CRIMSON_NYLIUM:
-            case WARPED_NYLIUM:
-            case COBBLESTONE:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case GOLD_ORE:
-            case IRON_ORE:
-            case COAL_ORE:
-            case NETHER_GOLD_ORE:
-            case LAPIS_ORE:
-            case SANDSTONE:
-            case CHISELED_SANDSTONE:
-            case CUT_SANDSTONE:
-            case OBSIDIAN:
-            case DIAMOND_ORE:
-            case REDSTONE_ORE:
-            case CLAY:
-            case NETHERRACK:
-            case SOUL_SAND:
-            case SOUL_SOIL:
-            case BASALT:
-            case MYCELIUM:
-            case END_STONE:
-            case EMERALD_ORE:
-            case QUARTZ_BLOCK:
-            case MAGMA_BLOCK:
-            case NETHER_WART_BLOCK:
-            case RED_NETHER_BRICKS:
-            case COPPER_BLOCK:
-            case DEEPSLATE:
-            case TUFF:
+    static boolean check_brock(String brock_type, List<?> check_bloc_list) {
+        boolean check = false;
+        for (int i = 0; i < Objects.requireNonNull(check_bloc_list).size(); i++) {
+            //System.out.println(brock_type);
+            //System.out.println(check_bloc_list.get(i));
+            if (Objects.equals(brock_type, check_bloc_list.get(i))) {
                 check = true;
                 break;
-            default:
-                check = false;
+            }
         }
         return check;
     }

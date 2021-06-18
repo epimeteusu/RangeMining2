@@ -1,0 +1,53 @@
+#採掘範囲の設定
+range_small:
+  use: true
+  range: 2
+range_medium:
+  use: true
+  range: 3
+range_large:
+  use: true
+  range: 4
+
+#範囲採掘ブロックの設定
+bloc_list:
+  - STONE
+  - GRANITE
+  - DIORITE
+  - ANDESITE
+  - GRASS_BLOCK
+  - DIRT
+  - COARSE_DIRT
+  - PODZOL
+  - CRIMSON_NYLIUM
+  - WARPED_NYLIUM
+  - COBBLESTONE
+  - SAND
+  - RED_SAND
+  - GRAVEL
+  - GOLD_ORE
+  - IRON_ORE
+  - COAL_ORE
+  - NETHER_GOLD_ORE
+  - LAPIS_ORE
+  - SANDSTONE
+  - CHISELED_SANDSTONE
+  - CUT_SANDSTONE
+  - OBSIDIAN
+  - DIAMOND_ORE
+  - REDSTONE_ORE
+  - CLAY
+  - NETHERRACK
+  - SOUL_SAND
+  - SOUL_SOIL
+  - BASALT
+  - MYCELIUM
+  - END_STONE
+  - EMERALD_ORE
+  - QUARTZ_BLOCK
+  - MAGMA_BLOCK
+  - NETHER_WART_BLOCK
+  - RED_NETHER_BRICKS
+  - COPPER_BLOCK
+  - DEEPSLATE
+  - TUFF

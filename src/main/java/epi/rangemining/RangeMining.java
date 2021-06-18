@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -18,10 +19,35 @@ import java.util.*;
 
 public final class RangeMining extends JavaPlugin implements Listener {
     HashMap<String, Integer> map = new HashMap<>();
+    List<Boolean> use_list = new ArrayList<>();
+    List<Integer> mining_range_list = new ArrayList<>();
+    List<?> check_bloc_list = new ArrayList<>();
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        //config.ymlが存在しなかった場合は新しく作成をします。
+        saveDefaultConfig();
+        //config.ymlを読み込みます。
+        FileConfiguration config = getConfig();
+        check_bloc_list = config.getList("bloc_list");
+        System.out.println(check_bloc_list);
+
+        use_list.add(0, config.getBoolean("range_small.use", false));
+        mining_range_list.add(0, config.getInt("range_small.range", 1));
+        System.out.println(use_list.get(0));
+        System.out.println(mining_range_list.get(0));
+
+        use_list.add(1, config.getBoolean("range_medium.use", false));
+        mining_range_list.add(1, config.getInt("range_medium.range", 2));
+        System.out.println(use_list.get(1));
+        System.out.println(mining_range_list.get(1));
+
+        use_list.add(2, config.getBoolean("range_large.use", false));
+        mining_range_list.add(2, config.getInt("range_large.range", 3));
+        System.out.println(use_list.get(2));
+        System.out.println(mining_range_list.get(2));
+
         getServer().getPluginManager().registerEvents(this, this);
         getLogger().info("プラグインが有効になったよ!");
     }
@@ -45,12 +71,12 @@ public final class RangeMining extends JavaPlugin implements Listener {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-        return command.cmd_Supplement(cmd, alias, args);
+        return command.cmd_Supplement(cmd, args);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        return command.cmd_check(sender, cmd, args, map);
+        return command.cmd_check(sender, cmd, args, map, use_list);
     }
 
     @EventHandler
@@ -58,28 +84,32 @@ public final class RangeMining extends JavaPlugin implements Listener {
         Block b = e.getBlock();//破壊ブロックの取得
         ItemStack p = e.getPlayer().getInventory().getItemInMainHand();
         if (p.getType() == Material.DIAMOND_PICKAXE) {
-            List<ItemStack> giveItemList = null;
-            int r = map.get(e.getPlayer().getName());
-            Location startLoc = b.getLocation().subtract(r, 0, r);
-
-            for (int x = startLoc.getBlockX(); x < startLoc.getBlockX() + 1 + r * 2; x++) {
-                for (int y = startLoc.getBlockY(); y < startLoc.getBlockY() + 1 + r * 2; y++) {
-                    for (int z = startLoc.getBlockZ(); z < startLoc.getBlockZ() + 1 + r * 2; z++) {
-                        Location loc = new Location(startLoc.getWorld(), x, y, z);
-                        Block b2 = loc.getBlock();
-                        Material brock_type = b2.getType();
-                        if (check_item.check_brock(brock_type)) {
-                            giveItemList = give_item(giveItemList, b2);
-                            b2.setType(Material.AIR);
+            Material brock_type = b.getType();
+            boolean check_brock2 = check_item.check_brock(String.valueOf(brock_type), check_bloc_list);
+            if (check_brock2) {
+                List<ItemStack> giveItemList = null;
+                int r = map.get(e.getPlayer().getName());
+                Location startLoc = b.getLocation().subtract(r, 0, r);
+                for (int x = startLoc.getBlockX(); x < startLoc.getBlockX() + 1 + r * 2; x++) {
+                    for (int y = startLoc.getBlockY(); y < startLoc.getBlockY() + 1 + r * 2; y++) {
+                        for (int z = startLoc.getBlockZ(); z < startLoc.getBlockZ() + 1 + r * 2; z++) {
+                            Location loc = new Location(startLoc.getWorld(), x, y, z);
+                            Block b2 = loc.getBlock();
+                            brock_type = b2.getType();
+                            if (check_item.check_brock(String.valueOf(brock_type), check_bloc_list)) {
+                                giveItemList = give_item(giveItemList, b2);
+                                b2.setType(Material.AIR);
+                            }
                         }
                     }
                 }
+                for (int i = 0; i < Objects.requireNonNull(giveItemList).size(); i++) {
+                    e.getPlayer().sendMessage(String.valueOf(giveItemList.get(i)));
+                    e.getPlayer().getWorld().dropItem(b.getLocation(), giveItemList.get(i));
+                    //e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), giveItemList.get(i));
+                }
+                e.getPlayer().sendMessage("-------------------------------------------");
             }
-            for (int i = 0; i < Objects.requireNonNull(giveItemList).size(); i++) {
-                e.getPlayer().sendMessage(String.valueOf(giveItemList.get(i)));
-                e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), giveItemList.get(i));
-            }
-            e.getPlayer().sendMessage("-------------------------------------------");
         }
     }
 
